@@ -12,6 +12,7 @@ module GHC.RTS.Events.Incremental
   , readHeader
   , readEvents
   , readEventLog
+  , pushChunk
   ) where
 import Control.Monad
 import Data.Either

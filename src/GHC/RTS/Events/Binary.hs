@@ -19,6 +19,7 @@ module GHC.RTS.Events.Binary
   , putHeader
   , putEvent
   , putEventType
+  , getEventTypes
 
   -- * Perf events
   , nEVENT_PERF_NAME
@@ -82,9 +83,9 @@ getHeader = do
             when (db /= EVENT_DATA_BEGIN) $
                   fail "My Data begin marker not found"
             return $ Header ets
-     where
-      getEventTypes :: Get [EventType]
-      getEventTypes = do
+
+getEventTypes :: Get [EventType]
+getEventTypes = do
           m <- get :: Get Marker
           case m of
              EVENT_ET_BEGIN -> do
