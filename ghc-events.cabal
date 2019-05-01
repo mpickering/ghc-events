@@ -78,9 +78,9 @@ library
                     GHC.RTS.Events.Analysis.Capability
                     GHC.RTS.Events.Analysis.SparkThread
                     GHC.RTS.Events.Analysis.Thread
+                    GHC.RTS.Events.Binary
   other-modules:    GHC.RTS.EventParserUtils,
                     GHC.RTS.EventTypes
-                    GHC.RTS.Events.Binary
   hs-source-dirs:   src
   include-dirs:     include
   extensions:	    RecordWildCards, NamedFieldPuns, BangPatterns, PatternGuards

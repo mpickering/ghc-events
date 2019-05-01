@@ -18,6 +18,7 @@ module GHC.RTS.Events.Binary
   , putEventLog
   , putHeader
   , putEvent
+  , putEventType
 
   -- * Perf events
   , nEVENT_PERF_NAME
@@ -839,8 +840,8 @@ putHeader (Header ets) = do
     mapM_ putEventType ets
     putMarker EVENT_HET_END
     putMarker EVENT_HEADER_END
- where
-    putEventType (EventType n d msz) = do
+
+putEventType (EventType n d msz) = do
         putMarker EVENT_ET_BEGIN
         putType n
         putE $ fromMaybe 0xffff msz
