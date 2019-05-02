@@ -1,6 +1,8 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DeriveFunctor #-}
+
 module GHC.RTS.Events.Incremental
   ( -- * Incremental API
     Decoder(..)
@@ -13,6 +15,7 @@ module GHC.RTS.Events.Incremental
   , readEvents
   , readEventLog
   , pushChunk
+  , withHeader
   ) where
 import Control.Monad
 import Data.Either
@@ -45,6 +48,7 @@ data Decoder a
   | Error B.ByteString String
   -- ^ The decoder has encountered an error with leftover input and an error
   -- message.
+  deriving Functor
 
 -- | Push an input chunk to the decoder
 pushChunk :: Decoder a -> B.ByteString -> Decoder a
