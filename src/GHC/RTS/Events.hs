@@ -462,6 +462,8 @@ buildEventInfo spec' =
           <> " in " <> TB.fromText heapProfModule
           <> " at " <> TB.fromText heapProfSrcLoc
           <> if isCaf heapProfFlags then " CAF" else ""
+        IPE{..} ->
+         "IPE: " <> TB.decimal ipeInfo <> " " <> TB.fromText ipeSrcLoc
         HeapProfSampleBegin {..} ->
           "start heap prof sample " <> TB.decimal heapProfSampleEra
         HeapProfSampleEnd {..} ->
@@ -571,6 +573,7 @@ showHeapProfBreakdown breakdown = case breakdown of
   HeapProfBreakdownRetainer -> "retainer"
   HeapProfBreakdownBiography -> "biography"
   HeapProfBreakdownClosureType -> "closure type"
+  HeapProfBreakdownInfoTable -> "info table"
 
 ppEventLog :: EventLog -> String
 ppEventLog = TL.unpack . TB.toLazyText . buildEventLog

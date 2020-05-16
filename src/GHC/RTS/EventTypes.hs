@@ -396,6 +396,7 @@ data EventInfo
                        , heapProfSrcLoc :: !Text
                        , heapProfFlags :: !HeapProfFlags
                        }
+  | IPE { ipeInfo :: !Word64, ipeLabel :: !Text, ipeModule :: !Text, ipeSrcLoc :: !Text }
   | HeapProfSampleBegin
                        { heapProfSampleEra :: !Word64
                        }
@@ -602,6 +603,7 @@ data HeapProfBreakdown
   | HeapProfBreakdownRetainer
   | HeapProfBreakdownBiography
   | HeapProfBreakdownClosureType
+  | HeapProfBreakdownInfoTable
   deriving Show
 
 instance Binary HeapProfBreakdown where
@@ -615,6 +617,7 @@ instance Binary HeapProfBreakdown where
       5 -> return HeapProfBreakdownRetainer
       6 -> return HeapProfBreakdownBiography
       7 -> return HeapProfBreakdownClosureType
+      8 -> return HeapProfBreakdownInfoTable
       _ -> fail $ "Unknown HeapProfBreakdown: " ++ show n
   put breakdown = put $ case breakdown of
     HeapProfBreakdownCostCentre -> (1 :: Word32)
@@ -624,6 +627,7 @@ instance Binary HeapProfBreakdown where
     HeapProfBreakdownRetainer -> 5
     HeapProfBreakdownBiography -> 6
     HeapProfBreakdownClosureType -> 7
+    HeapProfBreakdownInfoTable -> 8
 
 newtype HeapProfFlags = HeapProfFlags Word8
   deriving (Show, Binary)

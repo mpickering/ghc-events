@@ -811,6 +811,21 @@ heapProfParsers =
         ])
       (return ())
     return $! HeapProfCostCentre {..}
+  , VariableSizeParser EVENT_IPE $ do
+    payloadLen <- get :: Get Word16
+    ipeInfo <- get
+    ipeLabel <- getTextNul
+    ipeModule <- getTextNul
+    ipeSrcLoc <- getTextNul
+    assert
+      (fromIntegral payloadLen == sum
+        [ 8 -- heapProfCostCentreId
+        , textByteLen ipeLabel
+        , textByteLen ipeModule
+        , textByteLen ipeSrcLoc
+        ])
+      (return ())
+    return $! IPE {..}
   , FixedSizeParser EVENT_HEAP_PROF_SAMPLE_BEGIN 8 $ do
     heapProfSampleEra <- get
     return $! HeapProfSampleBegin {..}
