@@ -814,12 +814,18 @@ heapProfParsers =
   , VariableSizeParser EVENT_IPE $ do
     payloadLen <- get :: Get Word16
     ipeInfo <- get
+    ipeTableName <- getTextNul
+    ipeClosureDesc <- getTextNul
+    ipeTyDesc <- getTextNul
     ipeLabel <- getTextNul
     ipeModule <- getTextNul
     ipeSrcLoc <- getTextNul
     assert
       (fromIntegral payloadLen == sum
         [ 8 -- heapProfCostCentreId
+        , textByteLen ipeTableName
+        , textByteLen ipeClosureDesc
+        , textByteLen ipeTyDesc
         , textByteLen ipeLabel
         , textByteLen ipeModule
         , textByteLen ipeSrcLoc
@@ -1046,6 +1052,7 @@ eventTypeNum e = case e of
     ConcSweepEnd {} -> EVENT_CONC_SWEEP_END
     ConcUpdRemSetFlush {} -> EVENT_CONC_UPD_REM_SET_FLUSH
     NonmovingHeapCensus {} -> EVENT_NONMOVING_HEAP_CENSUS
+    IPE {} -> EVENT_IPE
 
 nEVENT_PERF_NAME, nEVENT_PERF_COUNTER, nEVENT_PERF_TRACEPOINT :: EventTypeNum
 nEVENT_PERF_NAME = EVENT_PERF_NAME

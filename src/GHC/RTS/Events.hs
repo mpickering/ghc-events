@@ -463,7 +463,10 @@ buildEventInfo spec' =
           <> " at " <> TB.fromText heapProfSrcLoc
           <> if isCaf heapProfFlags then " CAF" else ""
         IPE{..} ->
-         "IPE: " <> TB.decimal ipeInfo <> " " <> TB.fromText ipeSrcLoc
+         "IPE: " <> TB.hexadecimal ipeInfo <> ":"
+                 <> TB.fromText ipeClosureDesc <> ":"
+                 <> TB.fromText ipeTableName
+                 <> " - " <> TB.fromText ipeSrcLoc
         HeapProfSampleBegin {..} ->
           "start heap prof sample " <> TB.decimal heapProfSampleEra
         HeapProfSampleEnd {..} ->

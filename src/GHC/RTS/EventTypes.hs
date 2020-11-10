@@ -396,7 +396,12 @@ data EventInfo
                        , heapProfSrcLoc :: !Text
                        , heapProfFlags :: !HeapProfFlags
                        }
-  | IPE { ipeInfo :: !Word64, ipeLabel :: !Text, ipeModule :: !Text, ipeSrcLoc :: !Text }
+  | IPE { ipeInfo :: !Word64, ipeTableName :: !Text
+                       , ipeClosureDesc :: !Text
+                       , ipeTyDesc :: !Text
+                       , ipeLabel :: !Text
+                       , ipeModule :: !Text
+                       , ipeSrcLoc :: !Text }
   | HeapProfSampleBegin
                        { heapProfSampleEra :: !Word64
                        }
